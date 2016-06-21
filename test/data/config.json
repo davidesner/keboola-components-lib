@@ -1,0 +1,18 @@
+{
+    "storage": {
+        "input": {
+            "tables": [],
+            "files": []
+        },
+        "output": {
+            "tables": [],
+            "files": []
+        }
+    },
+    "parameters": {
+    "clientId" : "69608253",
+    "#clientMd5" : "f455058ad5d764142bf26960f6e96651",
+    "daysPeriod" : "5"
+    },
+    "image_parameters": []
+}
