@@ -1,9 +1,11 @@
 /*
  */
-package esnerda.keboola.components.configuration;
+package example.Config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import esnerda.keboola.components.configuration.IKBCParameters;
+import esnerda.keboola.components.configuration.ValidationException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;

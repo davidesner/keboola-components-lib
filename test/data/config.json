@@ -1,7 +1,16 @@
 {
     "storage": {
         "input": {
-            "tables": [],
+            "tables": [
+                {
+                    "source": "in.c-ares-test.test_data",
+                    "destination": "source.csv",
+                    "limit": 50,
+                    "columns": [],
+                    "where_values": [],
+                    "where_operator": "eq"
+                }
+            ],
             "files": []
         },
         "output": {

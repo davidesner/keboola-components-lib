@@ -1,11 +1,10 @@
 /*
  */
-package esnerda.keboola.components.appstate;
+package example.Config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import esnerda.keboola.components.appstate.LastState;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 
 /**
  *
