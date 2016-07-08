@@ -3,7 +3,6 @@
 package esnerda.keboola.components.configuration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +21,10 @@ public abstract class IKBCParameters {
     private List<String> getMissingFields(Map<String, Object> parametersMap) {
 
         List<String> missing = new ArrayList<>();
-        for (int i = 0; i < getRequiredFields().length; i++) {
-            Object value = parametersMap.get(getRequiredFields()[i]);
+        for (String requiredField : getRequiredFields()) {
+            Object value = parametersMap.get(requiredField);
             if (value == null) {
-                missing.add(getRequiredFields()[i]);
+                missing.add(requiredField);
             }
         }
 

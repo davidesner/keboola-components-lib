@@ -3,9 +3,6 @@
 package example;
 
 import esnerda.keboola.components.KBCException;
-import esnerda.keboola.components.appstate.LastState;
-import esnerda.keboola.components.configuration.ConfigFormat;
-import esnerda.keboola.components.configuration.IKBCParameters;
 import example.Config.KBCParametersImpl;
 import esnerda.keboola.components.configuration.handler.ConfigHandlerBuilder;
 import java.io.File;
@@ -67,7 +64,15 @@ public class test {
                 Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            handler.writeManifestFile(new ManifestFile(newFile.getName(), handler.getOutputTablesPath(), true, new String[]{"id"}, ",", "\""));
+            try {
+                handler.writeManifestFile(
+                        new ManifestFile.Builder(newFile.getName(), "out.c-main.test")
+                        .setIncrementalLoad(true)
+                        .setPrimaryKey(new String[]{"ID"}).build()
+                );
+            } catch (Exception ex) {
+                Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             System.out.println("Finished successfuly..");
         } catch (KBCException ex) { // print error to sterr and exit with appropriate status code

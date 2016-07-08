@@ -78,6 +78,18 @@ public class ManifestFile {
         this.columns = columns;
     }
 
+    private ManifestFile(Builder builder) {
+        this.name = builder.name;
+        this.rows_count = builder.rows_count;
+        this.data_size_bytes = builder.data_size_bytes;
+        this.destination = builder.destination;
+        this.incremental = builder.incremental;
+        this.primaryKey = builder.primaryKey;
+        this.delimiter = builder.delimiter;
+        this.enclosure = builder.enclosure;
+        this.columns = builder.columns;
+    }
+
     public String[] getColumns() {
         return columns;
     }
@@ -118,4 +130,81 @@ public class ManifestFile {
         this.name = name;
     }
 
+    public static class Builder {
+
+        private final String destination;
+        private boolean incremental;
+
+        //"," default
+        private String delimiter;
+
+        //"\"" default
+        private String enclosure;
+
+        private String[] primaryKey;
+        private String[] columns;
+        private Integer rows_count;
+        private Integer data_size_bytes;
+        private final String name;
+
+        /**
+         * Creates builder with required parameters set to default values.
+         * Default delimiter(,) and enclosure(") characters and incremental load
+         * set to false.
+         *
+         * @param name - name of the source csv table
+         * @param destination - destination SAPI path, i.e. in.c-main.tables
+         */
+        public Builder(String name, String destination) {
+            this.name = name;
+            this.destination = destination;
+            //set default values for required params
+            this.delimiter = ",";
+            this.enclosure = "\"";
+            this.incremental = false;
+        }
+
+        public Builder setDelimiter(String delimiter) {
+            this.delimiter = delimiter;
+            return this;
+        }
+
+        public Builder setEnclosure(String enclosure) {
+            this.enclosure = enclosure;
+            return this;
+        }
+
+        public Builder setIncrementalLoad(boolean incremental) {
+            this.incremental = incremental;
+            return this;
+        }
+
+        public Builder setPrimaryKey(String[] pkey) {
+            this.primaryKey = pkey;
+            return this;
+        }
+
+        public Builder setColumns(String[] cols) {
+            this.columns = cols;
+            return this;
+        }
+
+        public Builder setRowsCount(int rCount) {
+            this.rows_count = rCount;
+            return this;
+        }
+
+        public Builder setDataSize(int data_size_bytes) {
+            this.data_size_bytes = data_size_bytes;
+            return this;
+        }
+
+        public ManifestFile build() throws Exception {
+            if (incremental && (primaryKey == null || primaryKey.length == 0)) {
+                throw new Exception("Primary key must be set when incremental is set to true.");
+            }
+            return new ManifestFile(this);
+        }
+
+    }
 }

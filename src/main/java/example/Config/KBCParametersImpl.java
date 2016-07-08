@@ -46,6 +46,7 @@ public class KBCParametersImpl extends IKBCParameters {
         } else {
 
         }
+
         //set param map
         parametersMap.put("clientId", clientId);
         parametersMap.put("clientMd5", clientMd5);
