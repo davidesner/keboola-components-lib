@@ -8,7 +8,7 @@ import java.time.Instant;
 
 /**
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2016
  */
 public class LastStateImpl implements LastState {

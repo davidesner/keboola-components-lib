@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2015
  */
 public class KbcConfigParser implements ConfigParser {

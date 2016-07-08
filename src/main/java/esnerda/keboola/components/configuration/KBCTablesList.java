@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2015
  */
 public class KBCTablesList {

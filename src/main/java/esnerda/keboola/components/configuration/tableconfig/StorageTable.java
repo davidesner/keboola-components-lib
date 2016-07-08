@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Wrapper class for KBC Storage Table mapping.
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2016
  */
 public class StorageTable {

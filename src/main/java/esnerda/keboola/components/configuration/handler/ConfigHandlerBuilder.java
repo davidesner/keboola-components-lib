@@ -10,7 +10,7 @@ import esnerda.keboola.components.configuration.parser.KbcConfigParser;
 
 /**
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2016
  */
 public class ConfigHandlerBuilder {

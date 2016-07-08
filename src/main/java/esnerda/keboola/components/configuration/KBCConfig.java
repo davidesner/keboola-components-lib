@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author David Esner <esnerda at gmail.com>
+ * author David Esner <code>&lt;esnerda at gmail.com&gt;</code>
  * created 2015
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
