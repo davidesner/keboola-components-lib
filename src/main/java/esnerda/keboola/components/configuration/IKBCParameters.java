@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2016
+ * created 2016
  */
 public abstract class IKBCParameters {
 

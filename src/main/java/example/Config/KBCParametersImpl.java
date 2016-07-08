@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2015
+ * created 2015
  */
 public class KBCParametersImpl extends IKBCParameters {
 

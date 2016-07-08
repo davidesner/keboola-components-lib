@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2016
+ * created 2016
  */
 public class ManifestParser {
 

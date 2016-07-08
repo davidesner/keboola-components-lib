@@ -9,7 +9,7 @@ import java.time.Instant;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2016
+ * created 2016
  */
 public class LastStateImpl implements LastState {
 

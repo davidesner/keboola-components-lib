@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2016
+ * created 2016
  */
 @JsonInclude(Include.NON_NULL)
 public class ManifestFile {

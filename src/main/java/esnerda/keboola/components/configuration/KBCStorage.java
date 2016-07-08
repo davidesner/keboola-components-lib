@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2015
+ * created 2015
  */
 public class KBCStorage {
 

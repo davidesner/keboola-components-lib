@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * the standard KBC docker environment
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2016
+ * created 2016
  */
 class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
 

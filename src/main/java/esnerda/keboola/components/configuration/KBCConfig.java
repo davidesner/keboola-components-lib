@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author David Esner <esnerda at gmail.com>
- * @created 2015
+ * created 2015
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KBCConfig {
