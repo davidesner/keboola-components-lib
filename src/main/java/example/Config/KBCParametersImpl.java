@@ -65,7 +65,7 @@ public class KBCParametersImpl extends IKBCParameters {
             return true;
         } else {
 
-            throw new ValidationException("Validation error: " + error);
+            throw new ValidationException("Config validation error!", "Validation error: " + error, null);
         }
     }
 

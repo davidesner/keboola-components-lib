@@ -10,15 +10,30 @@ package esnerda.keboola.components;
  */
 public class KBCException extends Exception {
 
+    /**
+     * Defines severity level of the exception.
+     * 0 - warning
+     * 1 - user exception
+     * 2 - error
+     *
+     */
     private final int severity;
+
+    private final String detailedMessage;
+
+    private final Object details;
 
     /**
      * Create exception with default severity = 1 (User Exception)
      *
      * @param message
+     * @param detailedMessage
+     * @param details
      */
-    public KBCException(String message) {
+    public KBCException(String message, String detailedMessage, Object details) {
         super(message);
+        this.detailedMessage = detailedMessage;
+        this.details = details;
         severity = 1;
     }
 
@@ -26,12 +41,16 @@ public class KBCException extends Exception {
      * Create exception with custom severity
      *
      * @param message
+     * @param detailedMessage
+     * @param details
      * @param severity - severity code (Exit status = 1 will be considered as an
      * user exception, all other as application exceptions.)
      */
-    public KBCException(String message, int severity) {
+    public KBCException(String message, String detailedMessage, Object details, int severity) {
         super(message);
         this.severity = severity;
+        this.detailedMessage = detailedMessage;
+        this.details = details;
     }
 
     public int getSeverity() {

@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Basic implementation of KBCConfigurationEnvHandler facet. Initializes and
@@ -70,7 +68,7 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
     public void processConfigFile(File confFile) throws KBCException {
 
         if (!confFile.isDirectory()) {
-            throw new KBCException("Specified path is not a folder!", 1);
+            throw new KBCException("Specified path is not a folder!", "Specified data folder path: '" + confFile.getAbsoluteFile() + "' is not a folder!", confFile, 1);
         } else {
             this.dataPath = confFile.getPath();
             confFile = new File(confFile.getPath() + File.separator + "config." + confParser.getFormat().toLowerCase());
@@ -81,17 +79,17 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
         this.inTablesPath = dataPath + File.separator + "in" + File.separator + "tables"; //parse config
 
         if (!confFile.exists()) {
-            throw new KBCException("config.json does not exist!", 1);
+            throw new KBCException(confFile.getName() + " does not exist!", "Configuration file " + confFile.getName() + "does not exist!", 1);
         }
         //Parse config file
         try {
             this.config = this.confParser.parseConfigFile(confFile, this.parametersType);
 
         } catch (Exception ex) {
-            throw new KBCException("Failed to parse config file. " + ex.getMessage());
+            throw new KBCException("Failed to parse config file.", ex.getMessage(), ex);
         }
         if (!config.validate()) {
-            throw new KBCException(config.getValidationError());
+            throw new KBCException("Config file invalid!", config.getValidationError(), null);
         }
 
         if (checkInputTables) {
@@ -109,7 +107,7 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
             try {
                 lastState = (LastState) this.confParser.parseFile(stateFile, this.statefileType);
             } catch (IOException ex) {
-                throw new KBCException("Unable to parse state file! " + ex.getLocalizedMessage(), 2);
+                throw new KBCException("Unable to parse state file! ", ex.getLocalizedMessage(), ex, 2);
             }
         }
     }
@@ -120,7 +118,7 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
         if (this.sourceTables == null) {
             this.sourceTables = new ArrayList();
             if (config.getStorage().getInputTables().getTables().isEmpty()) {
-                throw new KBCException("No input tables found. Have you specified input mapping?");
+                throw new KBCException("No input tables found. Have you specified input mapping?", "Input mapping must be specified!", null);
             }
 
             List<KBCOutputMapping> inputMp = config.getStorage().getInputTables().getTables();
@@ -130,14 +128,14 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
 
                 src = new File(this.inTablesPath + File.separator + t.getDestination());
                 if (!src.exists()) {
-                    throw new KBCException("Source file " + src.getName() + " specified in input mapping does not exist!", 2);
+                    throw new KBCException("Source file " + src.getName() + " specified in input mapping does not exist!", "Source file not found in input folder!", src, 2);
                 }
                 //parse manifest
                 try {
                     srcManifest = ManifestParser.parseFile(new File(src.getAbsolutePath() + ".manifest"));
                     sourceTables.add(new StorageTable(srcManifest, src));
                 } catch (IOException ex) {
-                    throw new KBCException("Unable to parse manifest file " + src.getName() + ".manifest", 1);
+                    throw new KBCException("Unable to parse manifest file " + src.getName() + ".manifest", ex.getMessage(), ex, 1);
                 }
             }
         }
@@ -171,6 +169,16 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
     }
 
     @Override
+    public String getInPath() {
+        return dataPath + File.separator + "in";
+    }
+
+    @Override
+    public String getOutPath() {
+        return dataPath + File.separator + "out";
+    }
+
+    @Override
     public LastState getStateFile() throws KBCException {
         if (this.lastState == null) {
             retrieveStateFile();
@@ -183,16 +191,16 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
         try {
             ManifestWriter.buildManifestFile(manifest, outputTablesPath);
         } catch (IOException ex) {
-            throw new KBCException("Error writing manifest file for table: " + manifest.getName() + ". " + ex.getMessage());
+            throw new KBCException("Error writing manifest file for table: " + manifest.getName() + ". ", ex.getMessage(), ex);
         }
     }
 
     @Override
     public void writeStateFile(LastState stFile) throws KBCException {
         try {
-            LastStateWriter.writeStateFile(outputTablesPath, stFile, format);
+            LastStateWriter.writeStateFile(getOutPath(), stFile, format);
         } catch (IOException ex) {
-            throw new KBCException("Error writing state file.");
+            throw new KBCException("Error writing state file.", ex.getMessage(), ex);
         }
     }
 

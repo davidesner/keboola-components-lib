@@ -36,4 +36,8 @@ public interface KBCConfigurationEnvHandler {
     public String getOutputTablesPath();
 
     public String getInTablesPath();
+
+    public String getInPath();
+
+    public String getOutPath();
 }

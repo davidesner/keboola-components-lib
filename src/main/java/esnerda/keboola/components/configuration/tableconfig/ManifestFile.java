@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import esnerda.keboola.components.KBCException;
 
 /**
  *
@@ -199,9 +200,9 @@ public class ManifestFile {
             return this;
         }
 
-        public ManifestFile build() throws Exception {
+        public ManifestFile build() throws KBCException {
             if (incremental && (primaryKey == null || primaryKey.length == 0)) {
-                throw new Exception("Primary key must be set when incremental is set to true.");
+                throw new KBCException("Error building manifest file!", "Primary key must be set when incremental is set to true.", this);
             }
             return new ManifestFile(this);
         }

@@ -98,7 +98,7 @@ public class ConfigHandlerBuilder {
         try {
             return new KBCConfigurationHandlerImpl(checkInputTables, statefileType, parametersType, new KbcConfigParser(format.name()), format);
         } catch (Exception ex) {
-            throw new KBCException(ex.getMessage());
+            throw new KBCException(ex.getMessage(), "", ex);
         }
     }
 
