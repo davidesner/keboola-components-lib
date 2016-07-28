@@ -107,7 +107,7 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
             try {
                 lastState = (LastState) this.confParser.parseFile(stateFile, this.statefileType);
             } catch (IOException ex) {
-                throw new KBCException("Unable to parse state file! ", ex.getLocalizedMessage(), ex, 2);
+                throw new KBCException("Unable to parse state file! ", ex.getLocalizedMessage(), ex, 0);
             }
         }
     }

@@ -57,4 +57,12 @@ public class KBCException extends Exception {
         return severity;
     }
 
+    public String getDetailedMessage() {
+        return detailedMessage;
+    }
+
+    public Object getDetails() {
+        return details;
+    }
+
 }

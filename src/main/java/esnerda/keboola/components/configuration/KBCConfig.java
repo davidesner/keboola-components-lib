@@ -35,7 +35,7 @@ public class KBCConfig {
         try {
             return params.validateParametres();
         } catch (ValidationException ex) {
-            this.validationError = ex.getMessage();
+            this.validationError = ex.getDetailedMessage();
             return false;
         }
 
