@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>esnerda</groupId>
 	<artifactId>keboola-components-lib</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +28,7 @@
 						</goals>
 						<configuration>
 							<additionalparam>${javadoc.opts}</additionalparam>
+							<finalName> </finalName>
 						</configuration>
 					</execution>
 				</executions>
@@ -91,5 +92,10 @@
 			<version>2.6.2</version>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>2.4.0</version>
+        </dependency>
 	</dependencies>
 </project>
