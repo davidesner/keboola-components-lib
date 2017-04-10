@@ -2,13 +2,14 @@
  */
 package esnerda.keboola.components.configuration.handler;
 
+import java.io.File;
+import java.util.List;
+
 import esnerda.keboola.components.KBCException;
 import esnerda.keboola.components.appstate.LastState;
 import esnerda.keboola.components.configuration.IKBCParameters;
 import esnerda.keboola.components.configuration.tableconfig.ManifestFile;
 import esnerda.keboola.components.configuration.tableconfig.StorageTable;
-import java.io.File;
-import java.util.List;
 
 /**
  *
@@ -16,6 +17,8 @@ import java.util.List;
  * created 2016
  */
 public interface KBCConfigurationEnvHandler {
+
+	public void processConfigFile(String[] args) throws KBCException;
 
     public void processConfigFile(File confFile) throws KBCException;
 

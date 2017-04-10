@@ -1,8 +1,10 @@
 package esnerda.keboola.components.result;
 
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,29 +25,39 @@ import org.supercsv.prefs.CsvPreference;
  *
  * @param <T>
  */
-public abstract class AbstractBeanResultWriter<T> implements IResultWriter<T>{
+public abstract class AbstractBeanResultWriter<T> implements IResultWriter<T>, Closeable{
 	
 	protected File resFile;
 	protected ICsvBeanWriter writer = null;
 	protected  CellProcessor[] cellProcessors;
 	protected String[] header;
+	protected BufferedWriter bw;
+	protected FileWriter fw;
 
 	@Override
 	public void initWriter(String path, Class<T> clazz) throws Exception {
 		initHeader(clazz.newInstance());
 		resFile = new File(path + File.separator + getFileName());
-		this.writer = new CsvBeanWriter(new BufferedWriter(new FileWriter(resFile)), CsvPreference.STANDARD_PREFERENCE);			
+		fw = new FileWriter(resFile);
+		bw = new BufferedWriter(fw);
+		this.writer = new CsvBeanWriter(bw, CsvPreference.STANDARD_PREFERENCE);			
 		cellProcessors = getProcessors(getHeader().length);
 		writer.writeHeader(getHeader());		
 	}
 
 	@Override
 	public void writeResult(T obj) throws Exception {
+		if (obj == null) {
+			return;
+		}
 		writer.write(obj, getHeader(), cellProcessors);		
 	}
 
 	@Override
 	public void writeAllResults(List<T> objs) throws Exception {
+		if (objs == null) {
+			return;
+		}
 		for (T o : objs){
 			writeResult(o);
 		}		
@@ -55,6 +67,19 @@ public abstract class AbstractBeanResultWriter<T> implements IResultWriter<T>{
 	public List<ResultFileMetadata> writeAndRetrieveResuts(List<T> objs) throws Exception {
 		writeAllResults(objs);		
 		return closeAndRetrieveMetadata();
+	}
+
+	@Override
+	public void close() throws IOException {
+		bw.flush();
+		writer.flush();
+		writer.close();
+		if (bw != null) {
+			bw.close();
+		}
+		if (fw != null) {
+			fw.close();
+		}		
 	}
 
 	/* get cell processors with dynamic size */

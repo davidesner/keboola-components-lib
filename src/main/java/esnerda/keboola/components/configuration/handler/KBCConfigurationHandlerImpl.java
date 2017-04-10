@@ -2,22 +2,23 @@
  */
 package esnerda.keboola.components.configuration.handler;
 
-import esnerda.keboola.components.KBCException;
-import esnerda.keboola.components.appstate.LastState;
-import esnerda.keboola.components.appstate.LastStateWriter;
-import esnerda.keboola.components.configuration.ConfigFormat;
-import esnerda.keboola.components.configuration.parser.ConfigParser;
-import esnerda.keboola.components.configuration.IKBCParameters;
-import esnerda.keboola.components.configuration.KBCConfig;
-import esnerda.keboola.components.configuration.KBCOutputMapping;
-import esnerda.keboola.components.configuration.tableconfig.ManifestFile;
-import esnerda.keboola.components.configuration.tableconfig.ManifestParser;
-import esnerda.keboola.components.configuration.tableconfig.ManifestWriter;
-import esnerda.keboola.components.configuration.tableconfig.StorageTable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import esnerda.keboola.components.KBCException;
+import esnerda.keboola.components.appstate.LastState;
+import esnerda.keboola.components.appstate.LastStateWriter;
+import esnerda.keboola.components.configuration.ConfigFormat;
+import esnerda.keboola.components.configuration.IKBCParameters;
+import esnerda.keboola.components.configuration.KBCConfig;
+import esnerda.keboola.components.configuration.KBCOutputMapping;
+import esnerda.keboola.components.configuration.parser.ConfigParser;
+import esnerda.keboola.components.configuration.tableconfig.ManifestFile;
+import esnerda.keboola.components.configuration.tableconfig.ManifestParser;
+import esnerda.keboola.components.configuration.tableconfig.ManifestWriter;
+import esnerda.keboola.components.configuration.tableconfig.StorageTable;
 
 /**
  * Basic implementation of KBCConfigurationEnvHandler facet. Initializes and
@@ -50,6 +51,13 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
         this.format = format;
     }
 
+    public void processConfigFile(String [] args) throws KBCException {
+    	if (args.length == 0) {
+			throw new KBCException("No parameters provided.", "", "", 1);
+		} 
+    	processConfigFile(new File(args[0]));
+    }
+
     /**
      * Process and validate the configuration file in specified directory.
      * Performs checks on existence
@@ -66,7 +74,9 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
      */
     @Override
     public void processConfigFile(File confFile) throws KBCException {
-
+    	if (confFile == null) {
+    		throw new KBCException("Config file cannot be null!", "", 1);
+    	}
         if (!confFile.isDirectory()) {
             throw new KBCException("Specified path is not a folder!", "Specified data folder path: '" + confFile.getAbsoluteFile() + "' is not a folder!", confFile, 1);
         } else {

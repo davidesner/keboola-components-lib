@@ -53,6 +53,14 @@ public class KBCException extends Exception {
         this.details = details;
     }
 
+    public KBCException(String detailedMessage, int severity, Exception cause){
+    	super(detailedMessage, cause);
+    	this.severity = severity;
+    	this.details = null;
+    	this.detailedMessage = detailedMessage;
+    }
+    
+
     public int getSeverity() {
         return severity;
     }

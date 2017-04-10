@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import esnerda.keboola.components.KBCException;
+import esnerda.keboola.components.result.ResultFileMetadata;
+
 
 /**
  *
@@ -165,6 +167,15 @@ public class ManifestFile {
             this.incremental = false;
         }
 
+		public static Builder buildDefaultFromResult(ResultFileMetadata result, String destBucket, Boolean incremental) {			
+        	Builder b = new Builder(result.getResFile().getName(), destBucket);
+			if (incremental) {
+				b.setPrimaryKey(result.getIdColums());
+			}
+			b.setIncrementalLoad(incremental);
+        	return b;
+        }
+
         public Builder setDelimiter(String delimiter) {
             this.delimiter = delimiter;
             return this;
@@ -202,7 +213,7 @@ public class ManifestFile {
 
         public ManifestFile build() throws KBCException {
             if (incremental && (primaryKey == null || primaryKey.length == 0)) {
-                throw new KBCException("Error building manifest file!", "Primary key must be set when incremental is set to true.", this);
+                setIncrementalLoad(false);
             }
             return new ManifestFile(this);
         }

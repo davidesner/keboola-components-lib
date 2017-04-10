@@ -2,12 +2,14 @@
  */
 package esnerda.keboola.components.logging;
 
-import esnerda.keboola.components.KBCException;
 import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.ConfigurationFactory;
+
+import esnerda.keboola.components.KBCException;
 
 /**
  *
@@ -28,26 +30,26 @@ public class DefaultLogger implements KBCLogger {
     }
 
     @Override
-    public void log(int severity, String shortMessage, String detailedMessage, Map<String, String> additionalFields) {
+    public void log(int severity, String shortMessage, String detailedMessage, Map<String, String> additionalFields, Exception cause) {
         switch (severity) {
             case 0:
-                logger.info(detailedMessage);
+                logger.info(detailedMessage, cause);
                 break;
             case 1:
-                logger.warn(detailedMessage);
+                logger.warn(detailedMessage, cause);
                 break;
             case 2:
-                logger.error(detailedMessage);
+                logger.error(detailedMessage, cause);
                 break;
         }
         if (severity > 2) {
-            logger.error(detailedMessage);
+            logger.error(detailedMessage, cause);
         }
     }
 
     @Override
     public void log(KBCException ex) {
-        log(ex.getSeverity(), ex.getMessage(), ex.getDetailedMessage(), null);
+        log(ex.getSeverity(), ex.getMessage(), ex.getDetailedMessage(), null, (Exception) ex.getCause());
     }
 
     @Override
@@ -56,8 +58,8 @@ public class DefaultLogger implements KBCLogger {
     }
 
     @Override
-    public void warning(String shortMessage, String detailedMessage, Map<String, String> additionalFields) {
-        logger.warn(detailedMessage);
+    public void warning(String shortMessage, String detailedMessage, Map<String, String> additionalFields, Exception cause) {
+        logger.warn(detailedMessage, cause);
     }
 
     @Override
@@ -66,8 +68,8 @@ public class DefaultLogger implements KBCLogger {
     }
 
     @Override
-    public void error(String shortMessage, String detailedMessage, Map<String, String> additionalFields) {
-        logger.error(detailedMessage);
+    public void error(String shortMessage, String detailedMessage, Map<String, String> additionalFields, Exception cause) {
+        logger.error(detailedMessage, cause);
     }
 
     @Override
@@ -83,23 +85,28 @@ public class DefaultLogger implements KBCLogger {
     }
 
     @Override
-    public void log(int severity, String message) {
-        log(severity, "", message, null);
+    public void log(int severity, String message, Exception cause) {
+        log(severity, "", message, null, cause);
     }
 
     @Override
     public void info(String detailedMessage) {
-        log(0, "", detailedMessage, null);
+        log(0, "", detailedMessage, null, null);
     }
 
     @Override
-    public void warning(String detailedMessage) {
-        log(1, "", detailedMessage, null);
+    public void warning(String detailedMessage, Exception cause) {
+        log(1, "", detailedMessage, null, cause);
     }
 
     @Override
-    public void error(String detailedMessage) {
-        log(2, "", detailedMessage, null);
+    public void error(String detailedMessage, Exception cause) {
+        log(2, "", detailedMessage, null, cause);
     }
+
+	@Override
+	public Logger getLogger() {
+		return logger;
+	}
 
 }

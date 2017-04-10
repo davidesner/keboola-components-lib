@@ -6,7 +6,6 @@ import java.util.List;
 import esnerda.keboola.components.result.AbstractBeanResultWriter;
 import esnerda.keboola.components.result.ResultFileMetadata;
 
-
 /**
  * @author David Esner
  */
@@ -20,7 +19,7 @@ public class DefaultBeanResultWriter<T> extends AbstractBeanResultWriter<T> {
 	}
 	@Override
 	public List<ResultFileMetadata> closeAndRetrieveMetadata() throws Exception {
-		writer.close();
+		close();
 		return Collections.singletonList(new ResultFileMetadata(resFile, idCols));
 	}
 
