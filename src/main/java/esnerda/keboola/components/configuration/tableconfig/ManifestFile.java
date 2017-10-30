@@ -167,12 +167,14 @@ public class ManifestFile {
             this.incremental = false;
         }
 
-		public static Builder buildDefaultFromResult(ResultFileMetadata result, String destBucket, Boolean incremental) {			
-        	Builder b = new Builder(result.getResFile().getName(), destBucket);
-			if (incremental) {
-				b.setPrimaryKey(result.getIdColums());
-			}
-			b.setIncrementalLoad(incremental);
+		public static Builder buildDefaultFromResult(ResultFileMetadata result) {			
+        	Builder b = new Builder(result.getResFile().getName(), result.getDestination());
+			b.setDelimiter(result.getDelimiter());
+			b.setEnclosure(result.getEnclosure());
+			b.setPrimaryKey(result.getIdColums());
+			b.setIncrementalLoad(result.isIncremental());
+			
+			
         	return b;
         }
 

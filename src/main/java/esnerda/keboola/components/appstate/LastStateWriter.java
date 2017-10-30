@@ -2,13 +2,14 @@
  */
 package esnerda.keboola.components.appstate;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import esnerda.keboola.components.configuration.ConfigFormat;
-import java.io.File;
-import java.io.IOException;
 
 /**
  *
@@ -22,9 +23,6 @@ public class LastStateWriter {
         switch (format) {
             case json:
                 mapper = new ObjectMapper(new JsonFactory());
-                break;
-            case yml:
-                mapper = new ObjectMapper(new YAMLFactory());
                 break;
             default:
                 mapper = new ObjectMapper(new JsonFactory());

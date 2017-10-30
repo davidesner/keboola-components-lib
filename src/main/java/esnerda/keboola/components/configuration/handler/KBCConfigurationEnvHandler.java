@@ -8,6 +8,7 @@ import java.util.List;
 import esnerda.keboola.components.KBCException;
 import esnerda.keboola.components.appstate.LastState;
 import esnerda.keboola.components.configuration.IKBCParameters;
+import esnerda.keboola.components.configuration.KBCConfig;
 import esnerda.keboola.components.configuration.OAuthCredentials;
 import esnerda.keboola.components.configuration.tableconfig.ManifestFile;
 import esnerda.keboola.components.configuration.tableconfig.StorageTable;
@@ -26,6 +27,8 @@ public interface KBCConfigurationEnvHandler {
     public List<StorageTable> getInputTables() throws KBCException;
 
     public IKBCParameters getParameters();
+
+    public KBCConfig getConfig();
 
     public void validateConfig(File confFile) throws KBCException;
 

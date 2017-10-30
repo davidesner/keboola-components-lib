@@ -220,4 +220,9 @@ class KBCConfigurationHandlerImpl implements KBCConfigurationEnvHandler {
 		return this.config.getOAuthCredentials();
 	}
 
+	@Override
+	public KBCConfig getConfig() {
+		return config;
+	}
+
 }

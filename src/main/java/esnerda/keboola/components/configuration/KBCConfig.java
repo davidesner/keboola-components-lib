@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -81,9 +83,14 @@ public class KBCConfig {
 
     public OAuthCredentials getOAuthCredentials() {
         return this.auth.getoAuthApi().credentials;
-    }
+    }    
 
     public void setAuth(KBCAuthorization auth) {
         this.auth = auth;
+    }
+
+    public <T> T getAuthParams(Class<T> type) throws Exception {
+		ObjectMapper mapper = new ObjectMapper(new JsonFactory());		
+		return mapper.readValue(getOAuthCredentials().getData(), type);	
     }
 }

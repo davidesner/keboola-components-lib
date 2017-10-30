@@ -24,8 +24,11 @@ public class DefaultLogger implements KBCLogger {
     public DefaultLogger(Class c) {
 
         ConfigurationFactory.setConfigurationFactory(new CustomConfigurationFactory());
-
+        
         logger = LogManager.getLogger(c.getName());
+        
+        
+        
 
     }
 
