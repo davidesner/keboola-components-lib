@@ -38,6 +38,18 @@ public class ResultFileMetadata {
 		this.delimiter = ",";
 		this.enclosure = "\"";
 	}
+	
+	public ResultFileMetadata(File resFile, String destination, String[] idColums, String[] columns, String delimiter, String enclosure, boolean incremental) {
+		super();
+		this.resFile = resFile;
+		this.idColums = idColums;
+		this.columns = columns;
+		this.destination = destination;
+		this.incremental = incremental;
+		//set default values for required params
+		this.delimiter = delimiter;
+		this.enclosure = enclosure;
+	}
 
 	public File getResFile() {
 		return resFile;
