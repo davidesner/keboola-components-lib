@@ -23,9 +23,9 @@ public class CustomConfigurationFactory extends ConfigurationFactory {
 
     static Configuration createConfiguration(final String name, ConfigurationBuilder<BuiltConfiguration> builder) {
         builder.setConfigurationName(name);
-        builder.setStatusLevel(Level.ERROR);
+        builder.setStatusLevel(Level.INFO);
         builder.add(builder.newFilter("ThresholdFilter", Filter.Result.ACCEPT, Filter.Result.NEUTRAL).
-                addAttribute("level", Level.DEBUG));
+                addAttribute("level", Level.INFO));
         AppenderComponentBuilder appenderBuilder = builder.newAppender("Stdout", "CONSOLE").
                 addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT);
 
@@ -34,10 +34,10 @@ public class CustomConfigurationFactory extends ConfigurationFactory {
         appenderBuilder.add(builder.newFilter("MarkerFilter", Filter.Result.DENY,
                 Filter.Result.NEUTRAL).addAttribute("marker", "FLOW"));
         builder.add(appenderBuilder);
-        builder.add(builder.newLogger("org.apache.logging.log4j", Level.DEBUG).
+        builder.add(builder.newLogger("org.apache.logging.log4j", Level.INFO).
                 add(builder.newAppenderRef("Stdout")).
                 addAttribute("additivity", false));
-        builder.add(builder.newRootLogger(Level.ERROR).add(builder.newAppenderRef("Stdout")));
+        builder.add(builder.newRootLogger(Level.INFO).add(builder.newAppenderRef("Stdout")));
         return builder.build();
     }
 
